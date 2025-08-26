@@ -25,4 +25,12 @@ Each folder covers one Node.js concept:
 - [ ] Async I/O  
 - [ ] Streams  
 - [ ] Clusters & Worker Threads  
-- [ ] Error Handling Patterns  
+- [ ] Error Handling Patterns
+
+
+---
+
+## Connect with me
+- **LinkedIn**: [[linkedin.com/in/julio-martins](linkedin.com/in/juliomartins/)]
+- **GitHub**: [github.com/julioemartins](github.com/juliomartins)
+- **Email**: martins.julio@gmail.com      
