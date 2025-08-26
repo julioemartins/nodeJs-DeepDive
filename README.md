@@ -9,8 +9,7 @@ This is not just about coding. it’s about making sure I can **lead teams with 
 
 ## Goals
 - Strengthen mastery of Node.js fundamentals.  
-- Document each concept with **clear explanations + runnable code**.  
-- Build confidence for technical interviews and leadership roles.  
+- Document each concept with **clear explanations + runnable code**.   
 - Turn mistakes into growth and mastery.  
 
 ## Repository Structure

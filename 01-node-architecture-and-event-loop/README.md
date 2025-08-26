@@ -7,17 +7,17 @@ This note explains what’s under the hood of Node.js (V8, bindings/N-API, libuv
 ## Table of Contents
 
 - [1) High-level mental model](#1-high-level-mental-model)
-- [2) “Single-threaded” — what it really means](#2-single-threaded-—-what-it-really-means)
-- [3) The Event Loop — phases (libuv)](#3-the-event-loop-—-phases-libuv)
+- [2) “Single-threaded” — what it really means](#2-single-threaded--what-it-really-means)
+- [3) The Event Loop — phases (libuv)](#3-the-event-loop--phases-libuv)
 - [4) Where async actually comes from](#4-where-async-actually-comes-from)
 - [5) Why the main thread blocks (and how to avoid)](#5-why-the-main-thread-blocks-and-how-to-avoid)
 - [6) Main bullets](#6-main-bullets)
 - [7) Practical Examples](#7-practical-examples)
-  - [Example 01 – Basic Order (Realtime, Microtasks, Macrotasks)](#example-01-–-basic-order-realtime-microtasks-macrotasks)
-  - [Example 02 – After I/O (setImmediate vs setTimeout)](#example-02-–-after-io-setimmediate-vs-settimeout)
-  - [Example 03 – nextTick vs Promises](#example-03-–-nexttick-vs-promises)
-  - [Example 04 – Blocking CPU](#example-04-–-blocking-cpu)
-  - [Example 05 – Thread Pool with pbkdf2](#example-05-–-thread-pool-with-pbkdf2)
+  - [Example 01 -- Basic Order (Realtime, Microtasks, Macrotasks)](#example-01--basic-order-realtime-microtasks-macrotasks)
+  - [Example 02 -- After I/O (setImmediate vs setTimeout)](#example-02--after-io-setimmediate-vs-settimeout)
+  - [Example 03 -- nextTick vs Promises](#example-03--nexttick-vs-promises)
+  - [Example 04 -- Blocking CPU](#example-04--blocking-cpu)
+  - [Example 05 -- Thread Pool with pbkdf2](#example-05--thread-pool-with-pbkdf2)
 
 ---
 
