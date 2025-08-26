@@ -32,5 +32,5 @@ Each folder covers one Node.js concept:
 
 ## Connect with me
 - **LinkedIn**: [linkedin.com/in/julio-martins](https://linkedin.com/in/juliomartins/)
-- **GitHub**: [github.com/julioemartins](github.com/juliomartins)
+- **GitHub**: [github.com/julioemartins](https://github.com/juliomartins)
 - **Email**: martins.julio@gmail.com      
