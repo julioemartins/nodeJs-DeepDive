@@ -1,7 +1,7 @@
 # Node.js Deep Dive – Learning by Experiments
 
 ## Motivation
-I’m an experienced software engineer and technology leader, but in a recent interview I realized that my fluency in some **Node.js fundamentals** wasn’t sharp enough.  
+I’m an experienced software engineer and technology leader, but in a recent interview I realized that my fluency in some **Node.js fundamentals** wasn’t sharp enough. c 
 
 Since my main career goal is to relocate to Portugal and work either as a **Team Lead** or as a **hands-on Developer**, I created this repository as a structured learning journey. Here I document my experiments with Node.js, going beyond surface usage to understand and explain the **core mechanics** behind it.  
 
