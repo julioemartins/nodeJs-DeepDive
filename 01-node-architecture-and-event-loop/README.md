@@ -4,6 +4,23 @@ This note explains what’s under the hood of Node.js (V8, bindings/N-API, libuv
 
 ---
 
+## Table of Contents
+
+- [1) High-level mental model](#1-high-level-mental-model)
+- [2) “Single-threaded” — what it really means](#2-single-threaded-—-what-it-really-means)
+- [3) The Event Loop — phases (libuv)](#3-the-event-loop-—-phases-libuv)
+- [4) Where async actually comes from](#4-where-async-actually-comes-from)
+- [5) Why the main thread blocks (and how to avoid)](#5-why-the-main-thread-blocks-and-how-to-avoid)
+- [6) Main bullets](#6-main-bullets)
+- [7) Practical Examples](#7-practical-examples)
+  - [Example 01 – Basic Order (Realtime, Microtasks, Macrotasks)](#example-01-–-basic-order-realtime-microtasks-macrotasks)
+  - [Example 02 – After I/O (setImmediate vs setTimeout)](#example-02-–-after-io-setimmediate-vs-settimeout)
+  - [Example 03 – nextTick vs Promises](#example-03-–-nexttick-vs-promises)
+  - [Example 04 – Blocking CPU](#example-04-–-blocking-cpu)
+  - [Example 05 – Thread Pool with pbkdf2](#example-05-–-thread-pool-with-pbkdf2)
+
+---
+
 ## 1) High-level mental model
 
 ```
@@ -66,7 +83,7 @@ Each **tick** of the loop processes queues in phases:
 
 ### Microtasks vs Macrotasks (Node specifics)
 - **Microtasks**: `Promise` reactions / `queueMicrotask`. They run **after each callback completes**, **before** the loop moves on.
-- **`process.nextTick`**: a **special queue** that runs **before** other microtasks (highest priority). Overuse can "freeze" the loop.
+- **`process.nextTick`**: a **special queue** that runs **before** other microtasks (highest priority). Overuse can "freeze the loop."
 - **Macrotasks**: the phases described above (timers, poll, check, etc.).
 
 **Simplified order per callback:**
@@ -96,7 +113,7 @@ Each **tick** of the loop processes queues in phases:
 
 ---
 
-## 6) Interview-grade bullets
+## 6) Main bullets
 
 - JS runs on **one** thread; Node uses **libuv** to integrate **async I/O + thread pool**.
 - **Event loop** phases: timers → pending → poll → check → close.  
@@ -104,4 +121,31 @@ Each **tick** of the loop processes queues in phases:
 - **Network I/O**: async via OS; **FS/crypto**: often via **thread pool**.  
 - **Blocking** comes from **synchronous CPU** on the main thread – not from well-used async I/O.
 
----</file>
+---
+
+## 7) Practical Examples
+
+### Example 01 – Basic Order (Realtime, Microtasks, Macrotasks)
+
+This example explains the execution order of different types of tasks in Node.js: synchronous code, `process.nextTick`, Promises (microtasks), and macrotasks such as `setTimeout` and `setImmediate`. It demonstrates how synchronous code runs first, followed by `process.nextTick` callbacks, then Promise reactions, and finally macrotasks.  
+[01-basic-order.js](./examples/01-basic-order.js)
+
+### Example 02 – After I/O (setImmediate vs setTimeout)
+
+This example demonstrates the behavior of `setImmediate` and `setTimeout(0)` inside I/O callbacks. It shows that `setImmediate` callbacks execute before `setTimeout(0)` due to the event loop phases order: Poll → Check → Timers.  
+[02-after-io.js](./examples/02-after-io.js)
+
+### Example 03 – nextTick vs Promises
+
+This example shows the priority difference between `process.nextTick` and Promise microtasks. It illustrates that `process.nextTick` callbacks run before Promise reactions in the microtask queue, giving them higher priority.  
+[03-nexttick-vs-promises.js](./examples/03-nexttick-vs-promises.js)
+
+### Example 04 – Blocking CPU
+
+This example demonstrates how heavy synchronous CPU-bound operations, such as long loops, block the event loop. It shows how such blocking delays timers, immediates, and I/O callbacks, affecting the responsiveness of the application.  
+[04-blocking-cpu.js](./examples/04-blocking-cpu.js)
+
+### Example 05 – Thread Pool with pbkdf2
+
+This example shows how libuv’s thread pool offloads CPU-intensive tasks like cryptographic operations (`pbkdf2`). It also explains how adjusting `UV_THREADPOOL_SIZE` can control concurrency and improve performance for workloads involving such tasks.  
+[05-threadpool-pbkdf2.js](./examples/05-threadpool-pbkdf2.js)
